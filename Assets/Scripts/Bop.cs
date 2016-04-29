@@ -18,7 +18,12 @@ public class Bop : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(this.transform.position.y < 0) {
+		if(this.transform.position.y < 0 ) {
+			if (this.GetComponentInParent<Oscilloscope>().IsHit(this.transform.position.x)) {
+				print("hit!");
+			} else {
+				print("save!");
+			}
 			gain = gain - .001;
 		}
 		if (gain < 0) {

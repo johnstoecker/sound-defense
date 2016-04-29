@@ -13,47 +13,54 @@ public class SineCreator : MonoBehaviour {
 	public double frequency;
 	public double offset;
 	public double gain = 0.05;
+
+	public AudioSource drone;
 	private waveType soundWave;
 
 	private double increment;
 	private double modulation;
 	private double phase;
 	private double phaseOffset;
-	[SerializeField] private Slider frequencySlider;
-	[SerializeField] private Slider offsetSlider;
-	[SerializeField] private AudioLowPassFilter lowPassFilter;
+	private Slider frequencySlider;
+	private Slider offsetSlider;
+//	private AudioLowPassFilter lowPassFilter;
 	private double sampling_frequency = 48000;
 
 	void Start()
 	{
+		frequencySlider = GameObject.Find ("FrequencySlider").GetComponent<Slider> ();
+		offsetSlider = GameObject.Find ("OffsetSlider").GetComponent<Slider> ();
+//		lowPassFilter = GameObject.Find ("lowPassFilter").GetComponent<AudioLowPassFilter> ();
+//		lowPassFilter = this.GetComponent<AudioLowPassFilter> ();
 		frequency = frequencySlider.value;
-		print (frequency);
 		offset = offsetSlider.value;
+
 		soundWave = waveType.Saw;
 	}
 
 	void Update()
 	{
-		frequency = frequencySlider.value;
-		offset = offsetSlider.value;
-		if (soundWave == waveType.Saw) {
-			lowPassFilter.cutoffFrequency = (float)(offset * 50) + 2000;
-		}
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			Application.Quit();
-		}	
+		drone.pitch = frequencySlider.value;
+//		frequency = frequencySlider.value;
+//		offset = offsetSlider.value;
+//		if (soundWave == waveType.Saw) {
+//			lowPassFilter.cutoffFrequency = (float)(offset * 50) + 2000;
+//		}
+//		if (Input.GetKeyDown(KeyCode.Escape)) {
+//			Application.Quit();
+//		}	
 	}
 
-	void OnAudioFilterRead(float[] data, int channels)
-	{
-		if (soundWave == waveType.Sine) {
-			playSine (data, channels);
-		} else if (soundWave == waveType.Saw) {
-			playSaw (data, channels);
-		} else if (soundWave == waveType.Synth) {
-			playSynth(data, channels);
-		}
-	}
+//	void OnAudioFilterRead(float[] data, int channels)
+//	{
+//		if (soundWave == waveType.Sine) {
+//			playSine (data, channels);
+//		} else if (soundWave == waveType.Saw) {
+//			playSaw (data, channels);
+//		} else if (soundWave == waveType.Synth) {
+//			playSynth(data, channels);
+//		}
+//	}
 
 
 	//saw wave
